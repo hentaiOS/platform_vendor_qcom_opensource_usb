@@ -706,7 +706,8 @@ static void uevent_event(uint32_t /*epevents*/, struct data *payload) {
                strlen("POWER_SUPPLY_NAME=usb"))) {
         std::string contaminantPresence;
 
-        if (!readFile("/sys/class/qcom-battery/moisture_detection_status", &contaminantPresence)) {
+        if (!readFile("/sys/class/power_supply/usb/moisture_detected", &contaminantPresence) ||
+            !readFile("/sys/class/qcom-battery/moisture_detection_status", &contaminantPresence)) {
           if ((contaminantPresence == "1" && payload->usb->mContaminantPresence == false)
               || (contaminantPresence == "0" && payload->usb->mContaminantPresence == true)){
 
